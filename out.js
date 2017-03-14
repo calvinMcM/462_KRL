@@ -5,7 +5,10 @@ module.exports = {
     "description": "\nA first ruleset for the Quickstart\n",
     "author": "Phil Windley",
     "logging": true,
-    "shares": ["hello"]
+    "shares": [
+      "hello",
+      "__testing"
+    ]
   },
   "global": function* (ctx) {
     ctx.scope.set("hello", ctx.KRLClosure(ctx, function* (ctx) {
@@ -23,7 +26,8 @@ module.exports = {
       ],
       "events": [{
           "domain": "echo",
-          "type": "hello"
+          "type": "hello",
+          "attrs": ["name"]
         }]
     });
   },
@@ -44,13 +48,16 @@ module.exports = {
             ]]
         }
       },
+      "prelude": function* (ctx) {
+        ctx.scope.set("name", yield ctx.callKRLstdlib("klog", yield (yield ctx.modules.get(ctx, "event", "attr"))(ctx, ["name"]), "our passed in name: "));
+      },
       "action_block": {
         "actions": [{
             "action": function* (ctx) {
               return {
                 "type": "directive",
                 "name": "say",
-                "options": { "something": "Hello World" }
+                "options": { "something": yield ctx.callKRLstdlib("+", "Hello ", ctx.scope.get("name")) }
               };
             }
           }]

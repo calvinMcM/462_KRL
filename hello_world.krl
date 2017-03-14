@@ -26,7 +26,7 @@ A first ruleset for the Quickstart
         "events": [
             {
                 "domain": "echo",
-                "type": "hello".
+                "type": "hello",
                 "attrs": ["name"]
             }
         ]
