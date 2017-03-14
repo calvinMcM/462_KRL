@@ -33,9 +33,12 @@ A first ruleset for the Quickstart
   }
 
   rule hello_world {
-    select when echo hello
-    send_directive("say") with
-      something = "Hello World"
+      select when echo hello
+      pre {
+          name = event:attr("name").klog("our passed in name: ")
+      }
+      send_directive("say") with
+        something = "Hello " + name
   }
 
 }
