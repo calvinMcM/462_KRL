@@ -6,7 +6,7 @@ This is a mess
 >>
     author "Calvin McMurray"
     logging on
-    shares hello, __testing
+    shares message, __testing
   }
 
   global {
