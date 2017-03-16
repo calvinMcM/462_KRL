@@ -10,8 +10,8 @@ A first ruleset for the Quickstart
   }
 
   global {
-    hello = function(obj) {
-      msg = "Hello " + obj;
+    message = function(obj) {
+      msg = "message " + obj;
       msg
     }
 
