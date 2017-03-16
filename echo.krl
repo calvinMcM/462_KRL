@@ -1,6 +1,6 @@
-ruleset hello_world {
+ruleset echo {
   meta {
-    name "Hello World"
+    name "Echo"
     description <<
 This is a mess
 >>
@@ -33,7 +33,7 @@ This is a mess
     }
   }
 
-  rule hello_world {
+  rule hello {
       select when echo hello
       pre {
           name = event:attr("name").klog("our passed in name: ")
