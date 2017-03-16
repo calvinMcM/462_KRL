@@ -1,6 +1,6 @@
-ruleset track_trips {
+ruleset hello_world {
   meta {
-    name "Track Trips"
+    name "Hello World"
     description <<
 A first ruleset for the Quickstart
 >>
@@ -10,6 +10,11 @@ A first ruleset for the Quickstart
   }
 
   global {
+    hello = function(obj) {
+      msg = "Hello " + obj;
+      msg
+    }
+
     __testing = {
         "queries": [
             {
@@ -28,13 +33,13 @@ A first ruleset for the Quickstart
     }
   }
 
-  rule process_trip {
-      select when echo message
+  rule hello_world {
+      select when echo hello
       pre {
-          milage = event:attr("milage").klog("our passed in mileage: ")
+          name = event:attr("name").klog("our passed in name: ")
       }
-      send_directive("trip") with
-        trip_length = milage
+      send_directive("say") with
+        something = "Hello " + name
   }
 
 }
