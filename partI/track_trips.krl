@@ -16,7 +16,7 @@ I'd call it trip logic. But it's more like "trippy" logic...
             {
                 "domain": "echo",
                 "type": "message",
-                "attrs": ["name"]
+                "attrs": ["mileage"]
             }
         ]
     }
