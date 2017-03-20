@@ -33,5 +33,7 @@ The process_trip rule will now be evaluated only when the correct domain and eve
 No, because it doesn't explicitly raise any other events.
 
 3) How do your logs show that the find_long_trips rule works? Pick out specific lines and explain them.
+I put a log in the find_long_trips rule's prelude section to make sure that the event was being raised - line 38.
 
 4) How would you modify the system so that the long_trip is not hard coded without relying on an external service?
+Use an entity variable.

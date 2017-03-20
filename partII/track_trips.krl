@@ -27,7 +27,7 @@ Part II Ruleset for Pico I lab BYU CS 462
 
       select when car new_trip
       fired{
-        raise explicit event trip_processed
+        raise explicit event "trip_processed"
           attributes event:attrs()
       }
   }
@@ -40,7 +40,7 @@ Part II Ruleset for Pico I lab BYU CS 462
         if(milage > long_trip) then
             noop()
             fired{
-              raise explicit event found_long_trip
+              raise explicit event "found_long_trip"
             }
   }
 }
