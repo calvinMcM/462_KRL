@@ -71,10 +71,9 @@ Questions:
 Deliverables:
 
     1) The source URLs for your rulesets
-
+        https://raw.githubusercontent.com/calvinMcM/462_KRL/master/partIII/trip_store.krl
     2) The RIDs for your rulesets
 
     3) The ECI of the pico that your rulesets are installed in.
 
     4) A screenshot of the Engine Rulesets page (Links to an external site.) for the ruleset trip_store showing the ruleset name and your shares and provides pragmas.
-    

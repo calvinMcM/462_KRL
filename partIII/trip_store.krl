@@ -6,28 +6,28 @@ Part III Ruleset for Pico I lab BYU CS 462
 >>
     author "Calvin McMurray"
     logging on
-    shares new_trip, __testing
+    shares trips, long_trips, short_trips
+    provides trips, long_trips, short_trips
   }
 
   global {
-    __testing = {
-        "queries": [],
-        "events": [
-            {
-                "domain": "car",
-                "type": "new_trip",
-                "attrs": ["name"]
-            }
-        ]
+    long_trips = 7
+    trips = function(){
+        ent:coll
     }
-    long_trip = 7
+    long_trips = function(){
+        ent:coll_long
+    }
+    short_trips = function(){
+        ent:coll.filter(function(a){ a{"mileage"} < long_trips })
+    }
   }
 
   rule collect_trip {
 
       select when explicit trip_processed
         pre{
-            mileage = event:attr("milage").klog("our passed in mileage: ")
+            mileage = event:attr("mileage").klog("our passed in mileage: ")
             timestamp = time:now()
         }
         always{
@@ -38,7 +38,7 @@ Part III Ruleset for Pico I lab BYU CS 462
   rule collect_long_trip {
     select when explicit found_long_trip
       pre{
-        mileage = event:attr("milage").klog("our passed in mileage: ")
+        mileage = event:attr("mileage").klog("our passed in mileage: ")
         timestamp = time:now()
       }
       always{

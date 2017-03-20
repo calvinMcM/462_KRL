@@ -6,20 +6,30 @@ module.exports = {
     "author": "Calvin McMurray",
     "logging": true,
     "shares": [
-      "new_trip",
-      "__testing"
+      "trips",
+      "long_trips",
+      "short_trips"
+    ],
+    "provides": [
+      "trips",
+      "long_trips",
+      "short_trips"
     ]
   },
   "global": function* (ctx) {
-    ctx.scope.set("__testing", {
-      "queries": [],
-      "events": [{
-          "domain": "car",
-          "type": "new_trip",
-          "attrs": ["name"]
-        }]
-    });
-    ctx.scope.set("long_trip", 7);
+    ctx.scope.set("long_trips", 7);
+    ctx.scope.set("trips", ctx.KRLClosure(ctx, function* (ctx) {
+      return yield ctx.modules.get(ctx, "ent", "coll");
+    }));
+    ctx.scope.set("long_trips", ctx.KRLClosure(ctx, function* (ctx) {
+      return yield ctx.modules.get(ctx, "ent", "coll_long");
+    }));
+    ctx.scope.set("short_trips", ctx.KRLClosure(ctx, function* (ctx) {
+      return yield ctx.callKRLstdlib("filter", yield ctx.modules.get(ctx, "ent", "coll"), ctx.KRLClosure(ctx, function* (ctx) {
+        ctx.scope.set("a", ctx.getArg(ctx.args, "a", 0));
+        return yield ctx.callKRLstdlib("<", yield ctx.callKRLstdlib("get", ctx.scope.get("a"), "mileage"), ctx.scope.get("long_trips"));
+      }));
+    }));
   },
   "rules": {
     "collect_trip": {
