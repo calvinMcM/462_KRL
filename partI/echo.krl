@@ -22,6 +22,11 @@ This is a mess
                 "domain": "echo",
                 "type": "message",
                 "attrs": ["input"]
+            },
+            {
+                "domain": "echo",
+                "type": "hello",
+                "attrs": ["name"]
             }
         ]
     }
