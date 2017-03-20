@@ -4,10 +4,34 @@ Part I
 krl-compiler on the command line
 
 2) What was the output of the test you ran in (4)? How many directives were returned? How many rules do you think ran?
+
 {"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}}]}
-It ran 1 rules for this query.
+
+It ran 1 rules for this test.
 
 3) What was the output of the test you ran in (6)? How many directives were returned? How many rules do you think ran?
 
+{"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}},{"options":{},"name":"trip","meta":{"rid":"track_trips","rule_name":"process_trip","txn_id":"TODO","eid":"1556"}}]}
+
+It ran 2 rules and returned 2 directives for this test.
+
 
 4) How do you account for the difference? Diagram the event flow within the pico (i.e. show the event flow from when the pico receives event to the directives being created).
+
+    1. Pico receives event
+    2. Pico checks event against viable rules
+    3. For all viable rules, the event is raised, and a directive is created.
+    4. Created directives are wrapped up into a single response
+    5. Directive set is returned
+
+Part II
+
+1) What did you observe in (2) above? How do you explain it?
+The process_trip rule will now be evaluated only when the correct domain and event are present. Thus, it works under domain "car" with event "new_trip" rather than under "echo":"message"
+
+2) Would you say that the new rule in (3) is an event intermediary? If so, what kind? Justify your answer.
+No, because it doesn't explicitly raise any other events.
+
+3) How do your logs show that the find_long_trips rule works? Pick out specific lines and explain them.
+
+4) How would you modify the system so that the long_trip is not hard coded without relying on an external service?
