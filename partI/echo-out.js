@@ -6,6 +6,7 @@ module.exports = {
     "author": "Calvin McMurray",
     "logging": true,
     "shares": [
+      "hello",
       "message",
       "__testing"
     ]
