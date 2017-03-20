@@ -11,7 +11,8 @@ Part II Ruleset for Pico I lab BYU CS 462
 
   global {
     __testing = {
-        "queries": [],
+        "queries": [
+        ],
         "events": [
             {
                 "domain": "car",

@@ -6,12 +6,35 @@ Part III Ruleset for Pico I lab BYU CS 462
 >>
     author "Calvin McMurray"
     logging on
-    shares trips, long_trips, short_trips
+    shares trips, long_trips, short_trips, __testing
     provides trips, long_trips, short_trips
   }
 
   global {
     long_trips = 7
+    __testing = {
+        "queries": [
+            {"name":"trips"},
+            {"name":"long_trips"},
+            {"name":"short_trips"}],
+        "events": [
+            {
+                "domain": "explicit",
+                "type": "trip_processed",
+                "attrs": ["mileage", "timestamp"]
+            },
+            {
+                "domain": "explicit",
+                "type": "found_long_trip",
+                "attrs": ["mileage", "timestamp"]
+            },
+            {
+                "domain": "car",
+                "type": "trip_reset",
+                "attrs": []
+            }
+        ]
+    }
     trips = function(){
         ent:coll.klog("Known trips:")
     }
@@ -24,14 +47,13 @@ Part III Ruleset for Pico I lab BYU CS 462
   }
 
   rule collect_trip {
-
       select when explicit trip_processed
         pre{
             mileage = event:attr("mileage").klog("our passed in (standard) mileage: ")
-            timestamp = time:now()
+            timestamp = event:attr("timestamp")
         }
         always{
-            ent:coll.append({"mileage":mileage,"time":timestamp})
+            ent:coll := ent:coll.append({"mileage":mileage,"time":timestamp})
         }
   }
 
@@ -39,10 +61,10 @@ Part III Ruleset for Pico I lab BYU CS 462
     select when explicit found_long_trip
       pre{
         mileage = event:attr("mileage").klog("our passed in (long) mileage: ")
-        timestamp = time:now()
+        timestamp = event:attr("timestamp")
       }
       always{
-        ent:coll_long.append({"mileage":mileage,"time":timestamp})
+        ent:coll_long := ent:coll_long.append({"mileage":mileage,"time":timestamp})
       }
   }
 
