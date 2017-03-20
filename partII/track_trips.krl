@@ -17,7 +17,7 @@ Part II Ruleset for Pico I lab BYU CS 462
             {
                 "domain": "car",
                 "type": "new_trip",
-                "attrs": ["name"]
+                "attrs": ["mileage"]
             }
         ]
     }
@@ -43,7 +43,7 @@ Part II Ruleset for Pico I lab BYU CS 462
             mileage = event:attr("mileage").as("Number")
             timestamp = time:now()
         }
-        if(mileage > long_trip) then
+        if(mileage >= long_trip) then
             noop()
             fired{
               raise explicit event "found_long_trip"

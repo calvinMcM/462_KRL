@@ -61,19 +61,26 @@ Part III
 Questions:
 
     1) Explain how the rule collect_trips and the function trips illustrate an event-query API.
+        The collect_trips rule allows for key events to be submitted (via PUT/POST) and for results to be queried later
+        via the functions.
 
     2) Explain your strategy for finding trips that aren't long trips in your short_trips function.
+        Well, I use a simple boolean filter since it is fast, cheap, and can be written in one line.
 
     3) What happens if provides doesn't list the name of the trips function?
+        Then that function can't be exported out of the ruleset.
 
     4) What happens if shares doesn't list it?
+        Then the function can't be shared due to key permissions limitations. Basically, can't be used because the right authority is missing for access.
+
 
 Deliverables:
 
     1) The source URLs for your rulesets
         https://raw.githubusercontent.com/calvinMcM/462_KRL/master/partIII/trip_store.krl
     2) The RIDs for your rulesets
-
+        track_trips_II
+        trip_store
     3) The ECI of the pico that your rulesets are installed in.
 
     4) A screenshot of the Engine Rulesets page (Links to an external site.) for the ruleset trip_store showing the ruleset name and your shares and provides pragmas.

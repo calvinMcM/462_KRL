@@ -11,7 +11,7 @@ Part III Ruleset for Pico I lab BYU CS 462
   }
 
   global {
-    long_trips = 7
+    long_trip = 7
     __testing = {
         "queries": [
             {"name":"trips"},
@@ -42,7 +42,7 @@ Part III Ruleset for Pico I lab BYU CS 462
         ent:coll_long.klog("Known long trips:")
     }
     short_trips = function(){
-        (ent:coll.filter(function(a){ a{"mileage"} < long_trips })).klog("Known short trips:")
+        ent:coll.filter(function(a){ a{"mileage"} < 7 })
     }
   }
 
@@ -53,7 +53,7 @@ Part III Ruleset for Pico I lab BYU CS 462
             timestamp = event:attr("timestamp")
         }
         always{
-            ent:coll := ent:coll.append({"mileage":mileage,"time":timestamp})
+            ent:coll := ent:coll.append({"mileage":mileage,"timestamp":timestamp})
         }
   }
 
@@ -64,7 +64,7 @@ Part III Ruleset for Pico I lab BYU CS 462
         timestamp = event:attr("timestamp")
       }
       always{
-        ent:coll_long := ent:coll_long.append({"mileage":mileage,"time":timestamp})
+        ent:coll_long := ent:coll_long.append({"mileage":mileage,"timestamp":timestamp})
       }
   }
 
