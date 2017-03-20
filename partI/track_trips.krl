@@ -2,9 +2,9 @@ ruleset track_trips {
   meta {
     name "Track Trips"
     description <<
-A first ruleset for the Quickstart
+I'd call it trip logic. But it's more like "trippy" logic...
 >>
-    author "Phil Windley"
+    author "Calvin McMurray"
     logging on
     shares message, __testing
   }
@@ -25,10 +25,10 @@ A first ruleset for the Quickstart
   rule process_trip {
       select when echo message
       pre {
-          milage = event:attr("milage").klog("our passed in mileage: ")
+          mileage = event:attr("mileage").klog("our passed in mileage: ")
       }
       send_directive("trip") with
-        trip_length = milage
+        trip_length = mileage
   }
 
 }

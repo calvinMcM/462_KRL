@@ -35,9 +35,9 @@ Part II Ruleset for Pico I lab BYU CS 462
   rule find_long_trips{
       select when explicit trip_processed
         pre {
-            milage = event:attr("milage").klog("our passed in mileage: ").as("Number")
+            mileage = event:attr("mileage").klog("our passed in mileage: ").as("Number")
         }
-        if(milage > long_trip) then
+        if(mileage > long_trip) then
             noop()
             fired{
               raise explicit event "found_long_trip"

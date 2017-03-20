@@ -1,39 +1,80 @@
 Part I
 
-1) What parsing method did you choose?
-krl-compiler on the command line
+Questions:
+    1) What parsing method did you choose?
+        krl-compiler on the command line, and the validater in the picos interface
 
-2) What was the output of the test you ran in (4)? How many directives were returned? How many rules do you think ran?
+    2) What was the output of the test you ran in (4)? How many directives were returned? How many rules do you think ran?
 
-{"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}}]}
+        {"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}}]}
 
-It ran 1 rules for this test.
+        It ran 1 rules for this test.
 
-3) What was the output of the test you ran in (6)? How many directives were returned? How many rules do you think ran?
+    3) What was the output of the test you ran in (6)? How many directives were returned? How many rules do you think ran?
 
-{"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}},{"options":{},"name":"trip","meta":{"rid":"track_trips","rule_name":"process_trip","txn_id":"TODO","eid":"1556"}}]}
+        {"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}},{"options":{},"name":"trip","meta":{"rid":"track_trips","rule_name":"process_trip","txn_id":"TODO","eid":"1556"}}]}
 
-It ran 2 rules and returned 2 directives for this test.
+        It ran 2 rules and returned 2 directives for this test.
 
 
-4) How do you account for the difference? Diagram the event flow within the pico (i.e. show the event flow from when the pico receives event to the directives being created).
+    4) How do you account for the difference? Diagram the event flow within the pico (i.e. show the event flow from when the pico receives event to the directives being created).
 
-    1. Pico receives event
-    2. Pico checks event against viable rules
-    3. For all viable rules, the event is raised, and a directive is created.
-    4. Created directives are wrapped up into a single response
-    5. Directive set is returned
+        1. Pico receives event
+        2. Pico checks event against viable rules
+        3. For all viable rules, the event is raised, and a directive is created.
+        4. Created directives are wrapped up into a single response
+        5. Directive set is returned
+
+Deliverables:
+    1) The source URLs for your rulesets
+        https://raw.githubusercontent.com/calvinMcM/462_KRL/master/partI/echo.krl
+        https://raw.githubusercontent.com/calvinMcM/462_KRL/master/partI/track_trips.krl
+    2) The RIDs for your rulesets
+        "echo" and "track_trips"
+    3) The ECI of a pico that your rulesets are installed in.
+        cj09m68vi0001xtqw1e0ejvd6
 
 Part II
 
-1) What did you observe in (2) above? How do you explain it?
-The process_trip rule will now be evaluated only when the correct domain and event are present. Thus, it works under domain "car" with event "new_trip" rather than under "echo":"message"
+Questions:
+    1) What did you observe in (2) above? How do you explain it?
+        The process_trip rule will now be evaluated only when the correct domain and event are present. Thus, it works under domain "car" with event "new_trip" rather than under "echo":"message"
 
-2) Would you say that the new rule in (3) is an event intermediary? If so, what kind? Justify your answer.
-No, because it doesn't explicitly raise any other events.
+    2) Would you say that the new rule in (3) is an event intermediary? If so, what kind? Justify your answer.
+        No, because it doesn't explicitly raise any other events.
 
-3) How do your logs show that the find_long_trips rule works? Pick out specific lines and explain them.
-I put a log in the find_long_trips rule's prelude section to make sure that the event was being raised - line 38.
+    3) How do your logs show that the find_long_trips rule works? Pick out specific lines and explain them.
+        I put a log in the find_long_trips rule's prelude section to make sure that the event was being raised - line 38.
 
-4) How would you modify the system so that the long_trip is not hard coded without relying on an external service?
-Use an entity variable.
+    4) How would you modify the system so that the long_trip is not hard coded without relying on an external service?
+        Use an entity variable.
+
+Deliverables:
+    1) The source URLs for your rulesets
+        https://raw.githubusercontent.com/calvinMcM/462_KRL/master/partII/track_trips.krl
+    2) The RIDs for your rulesets
+        "track_trips_II"
+    3) The ECI of a pico that your rulesets are installed in.
+        cj09m68vi0001xtqw1e0ejvd6
+Part III
+
+Questions:
+
+    1) Explain how the rule collect_trips and the function trips illustrate an event-query API.
+
+    2) Explain your strategy for finding trips that aren't long trips in your short_trips function.
+
+    3) What happens if provides doesn't list the name of the trips function?
+
+    4) What happens if shares doesn't list it?
+
+Deliverables:
+
+    1) The source URLs for your rulesets
+
+    2) The RIDs for your rulesets
+
+    3) The ECI of the pico that your rulesets are installed in.
+
+    4) A screenshot of the Engine Rulesets page (Links to an external site.) for the ruleset trip_store showing the ruleset name and your shares and provides pragmas.
+    
