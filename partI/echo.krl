@@ -16,18 +16,12 @@ This is a mess
     }
 
     __testing = {
-        "queries": [
-            {
-                "name": "hello",
-                "args": [ "obj" ]
-            },
-            { "name": "__testing" }
-        ],
+        "queries": [],
         "events": [
             {
                 "domain": "echo",
-                "type": "hello",
-                "attrs": ["name"]
+                "type": "message",
+                "attrs": ["input"]
             }
         ]
     }

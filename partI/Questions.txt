@@ -1,0 +1,13 @@
+Part I
+
+1) What parsing method did you choose?
+krl-compiler on the command line
+
+2) What was the output of the test you ran in (4)? How many directives were returned? How many rules do you think ran?
+{"directives":[{"options":{"something":"Bob"},"name":"say","meta":{"rid":"echo","rule_name":"message","txn_id":"TODO","eid":"1556"}}]}
+It ran 1 rules for this query.
+
+3) What was the output of the test you ran in (6)? How many directives were returned? How many rules do you think ran?
+
+
+4) How do you account for the difference? Diagram the event flow within the pico (i.e. show the event flow from when the pico receives event to the directives being created).

@@ -6,22 +6,16 @@ A first ruleset for the Quickstart
 >>
     author "Phil Windley"
     logging on
-    shares hello, __testing
+    shares message, __testing
   }
 
   global {
     __testing = {
-        "queries": [
-            {
-                "name": "hello",
-                "args": [ "obj" ]
-            },
-            { "name": "__testing" }
-        ],
+        "queries": [],
         "events": [
             {
                 "domain": "echo",
-                "type": "hello",
+                "type": "message",
                 "attrs": ["name"]
             }
         ]
