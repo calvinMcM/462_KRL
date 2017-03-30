@@ -30,7 +30,7 @@ Fleet Manager
       select when car new_vehicle
       pre {
         vehicle_id = event:attr("vehicle_id")
-        exists = ent:sections >< vehicle_id
+        exists = ent:vehicles >< vehicle_id
         eci = meta:eci
       }
       if exists then
@@ -39,9 +39,32 @@ Fleet Manager
       fired {
       }
       else {
-        ent:sections := ent:sections.defaultsTo([]).union([vehicle_id]);
         raise pico event "new_child_request"
-            attributes { "dname": nameFromID(vehicle_id), "color": "#FF69B4" }
+            attributes { "vehicle_id": vehicle_id, "dname": nameFromID(vehicle_id), "color": "#7383d5" }
+      }
+  }
+
+  // Sets up a child pico with the Subscriptions, trip_store, and track_trips rulesets.
+  rule pico_child_initialized {
+      select when pico child_initialized
+      pre {
+        the_vehicle = event:attr("new_child")
+        vehicle_id = event:attr("rs_attrs"){"vehicle_id"}.klog("Howdy, Y'all!")
+      }
+      event:send(
+        { "eci": the_vehicle.eci, "eid": "install-ruleset",
+          "domain": "pico", "type": "new_ruleset",
+          "attrs": { "rid": "Subscriptions", "vehicle_id": vehicle_id } } )
+      event:send(
+        { "eci": the_vehicle.eci, "eid": "install-ruleset",
+          "domain": "pico", "type": "new_ruleset",
+          "attrs": { "rid": "trip_store", "vehicle_id": vehicle_id } } )
+      event:send(
+        { "eci": the_vehicle.eci, "eid": "install-ruleset",
+          "domain": "pico", "type": "new_ruleset",
+          "attrs": { "rid": "track_trips_II", "vehicle_id": vehicle_id } } )
+      fired {
+        ent:vehicles := ent:vehicles.defaultsTo([]).union([vehicle_id])
       }
   }
 }
