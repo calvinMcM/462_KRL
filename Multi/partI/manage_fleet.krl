@@ -10,6 +10,9 @@ Fleet Manager
   }
 
   global {
+    nameFromID = function(vehicle_id) {
+      "Vehicle" + vehicle_id + " Pico"
+    }
     __testing = {
         "queries": [
         ],
