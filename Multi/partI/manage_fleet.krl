@@ -6,7 +6,7 @@ Fleet Manager
 >>
     author "Calvin McMurray"
     logging on
-    shares __testing, getVehicles
+    shares __testing, vehicles
   }
 
   global {
@@ -14,7 +14,7 @@ Fleet Manager
       "Vehicle" + vehicle_id + " Pico"
     }
 
-    getVehicles = function(){
+    vehicles = function(){
         ent:vehicle_map
     }
 
@@ -28,7 +28,7 @@ Fleet Manager
 
     __testing = {
         "queries": [
-            {"name":"getVehicles"}
+            {"name":"vehicles"}
         ],
         "events": [
             {
