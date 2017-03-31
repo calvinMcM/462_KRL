@@ -6,7 +6,8 @@ Fleet Manager
 >>
     author "Calvin McMurray"
     logging on
-    shares __testing, vehicles
+    use module Subscriptions
+    shares __testing, vehicles, gatherAllTrips
   }
 
   global {
@@ -26,9 +27,19 @@ Fleet Manager
         "Subs" + vehicle_id + "-veh"
     }
 
+    gatherAllTrips = function(){
+        Subscriptions:getSubscriptions().filter(function(v){
+            v{"attributes"}{"subscriber_role"} == "vehicle"
+        }).map(function(s){
+            r = http:get("http://localhost:8080/sky/cloud/" + s{"attributes"}{"subscriber_eci"} + "/trip_store/trips");
+            r{"content"}.decode().klog("response:")
+        })
+    }
+
     __testing = {
         "queries": [
-            {"name":"vehicles"}
+            {"name":"vehicles"},
+            {"name":"gatherAllTrips"}
         ],
         "events": [
             {
@@ -42,8 +53,8 @@ Fleet Manager
                 "attrs": ["vehicle_id"]
             },
             {
-                "domain": "car",
-                "type": "pedestrianize",
+                "domain": "fleet",
+                "type": "destroy_all_vehicles",
                 "attrs": []
             },
             {
@@ -147,7 +158,7 @@ Fleet Manager
   }
 
   rule delete_all{
-      select when car pedestrianize
+      select when fleet destroy_all_vehicles
       always{
         ent:vehicle_map := {}
       }
