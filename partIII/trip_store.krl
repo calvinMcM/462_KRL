@@ -78,4 +78,20 @@ Part III Ruleset for Pico I lab BYU CS 462
         ent:coll_long := empty
       }
   }
+
+  rule make_fleet_report {
+      select when car make_fleet_report
+        pre{
+            events = event:attrs.klog("_EVENT ATTRIBUTES:")
+            rcn = event:attr("rcn").klog("Vehicle recieved directive with rcn:")
+            target_eci = event:attr("sender_eci").klog("Vehicle will reply to:")
+            trips_log = trips() || []
+        }
+
+        event:send(
+          { "eci": target_eci, "eid": "deliver_report",
+            "domain": "fleet", "type": "deliver_report",
+            "attrs": { "rcn": rcn, "log": trips_log } } )
+
+  }
 }

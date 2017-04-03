@@ -61,6 +61,11 @@ Fleet Manager
                 "domain": "debug",
                 "type": "kill_sub",
                 "attrs": ["vehicle_id"]
+            },
+            {
+                "domain": "fleet",
+                "type": "gather_trip_reports",
+                "attrs": []
             }
         ]
     }
@@ -161,6 +166,56 @@ Fleet Manager
       select when fleet destroy_all_vehicles
       always{
         ent:vehicle_map := {}
+      }
+  }
+
+  rule gather_trip_reports{
+      select when fleet gather_trip_reports
+      pre{
+          rcn = time:now()
+      }
+      fired{
+      raise obtuse event "really_send_this"
+        attributes {"rcn":rcn, "timestamp":timestamp}
+     }
+  }
+
+  rule spam_vehicles{
+      select when obtuse really_send_this
+      foreach Subscriptions:getSubscriptions().filter(function(v){
+          v{"attributes"}{"subscriber_role"} == "vehicle"
+      }) setting(s)
+      pre{
+          name = s{"name"}
+          rcn = event:attr("rcn").klog("About to spam with rcn:")
+          eci = meta:eci.klog("Spammer ECI:")
+          s_eci = s{"attributes"}{"subscriber_eci"}.klog("Spam Target ECI:")
+      }
+      event:send(
+        { "eci": s_eci, "eid": "make_fleet_report",
+          "domain": "car", "type": "make_fleet_report",
+          "attrs": {
+            "name": name,
+            "name_space": "car",
+            "my_role": "fleet",
+            "sender_role": "fleet",
+            "channel_type": "subscription",
+            "sender_eci": eci,
+            "rcn": rcn
+          }
+        }
+      )
+      fired{}
+  }
+
+  rule gather{
+      select when fleet deliver_report
+      pre{
+          rcn = event:attr("rcn").klog("Delivery RCN:")
+          log = event:attr("log").klog("Delivery Log:")
+      }
+      always{
+
       }
   }
 }
