@@ -82,7 +82,6 @@ Part III Ruleset for Pico I lab BYU CS 462
   rule make_fleet_report {
       select when car make_fleet_report
         pre{
-            events = event:attrs.klog("_EVENT ATTRIBUTES:")
             rcn = event:attr("rcn").klog("Vehicle recieved directive with rcn:")
             target_eci = event:attr("sender_eci").klog("Vehicle will reply to:")
             trips_log = trips() || []
