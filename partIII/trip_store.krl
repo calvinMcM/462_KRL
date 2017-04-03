@@ -84,7 +84,9 @@ Part III Ruleset for Pico I lab BYU CS 462
         pre{
             rcn = event:attr("rcn").klog("Vehicle recieved directive with rcn:")
             target_eci = event:attr("sender_eci").klog("Vehicle will reply to:")
-            trips_log = trips() || []
+            trips_log = {
+                "trips":trips() || []
+            }
         }
 
         event:send(

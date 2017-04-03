@@ -30,8 +30,12 @@
         showRecentReports = function(){
             rcns = ent:rcn_list.slice((ent:rcn_list.length() > 4) => (ent:rcn_list.length() - 5) | 0  ,ent:rcn_list.length() - 1);
             rcns.map(function(rcn){
-                rep = ent:reports{rcn};
-                rep{"hits"} = rep{"trips"}.length()
+                ort = ent:reports{rcn};
+
+                ort{"responding"} = ort{"trips"}.length();
+                rep = {
+                    "Rep":ort
+                }
             })
         }
 
